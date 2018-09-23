@@ -14,6 +14,9 @@ function Popup(type, cx, cy, w, h, col) {
 
     this.textBoxes = [];
 
+    this.x = this.cx - this.w/2;
+    this.y = this.cy - this.h/2
+
     this.toggle = function() {
         this.isOpen = !this.isOpen;
         if(this.type == popupTypes.MENU){
@@ -21,17 +24,17 @@ function Popup(type, cx, cy, w, h, col) {
             meaninglessButton.isVisible = !meaninglessButton.isVisible;
         }
         for (var i = 0; i < this.textBoxes.length; i++){
-            this.textBoxes[i].x = this.x;
-            this.textBoxes[i].y = this.y + textHeight*i + 1;
             this.textBoxes[i].w = this.w;
+            this.textBoxes[i].y = this.y + textHeight*i + 10;
+            if(!this.textBoxes[i].isImage){
+                this.textBoxes[i].x = this.x;
+            }else{
+                this.textBoxes[i].x = this.x + 20;
+            }
         }
-        console.log(menuPopup.textBoxes)
     }
 
     this.draw = function() {
-        this.x = this.cx - this.w/2;
-        this.y = this.cy - this.h/2;
-        
         stroke(140);
         strokeWeight(5);
         fill(this.col)
@@ -47,7 +50,7 @@ function Popup(type, cx, cy, w, h, col) {
         fill(this.col)
         if (this.isOpen) {
             this.textBoxes.forEach((i) => {
-                i.draw(this.y, this.cy + this.h/2 - textHeight);
+                i.draw(this.y, this.y + this.h - textHeight);
             })
         }
     }
@@ -61,7 +64,6 @@ function Popup(type, cx, cy, w, h, col) {
         }else{
             this.currScroll -= amt/2;
         }
-        console.log(this.type, this.canScroll, this.currScroll, this.h - this.textBoxes.length * textHeight)
     }
 
     this.checkColl = function(x2, y2){
@@ -79,15 +81,39 @@ function textBox(myText, size){
     this.x;
     this.y;
     this.w;
+    
+    this.isImage = false;
 
     //          upper limit, lower limit
     this.draw = function(UL, LL){
-        textAlign(CENTER, CENTER);
         strokeWeight(3);
         textSize(this.size)
         if(this.y > UL && this.y < LL){
+            textAlign(CENTER, TOP);
             text(this.myText, this.x, this.y, this.w, 40);
+            
 
+            // text bounding boxes
+            // rectMode(CORNER);
+            // fill(255, 255, 0, 100)
+            // rect(this.x, this.y, this.w, textHeight)
+        }
+    }
+}
+
+function imageBox(img, size){
+    this.img = img;
+    this.x;
+    this.y;
+    this.w;
+
+    this.isImage = true;
+
+    //          upper limit, lower limit
+    this.draw = function(UL, LL){
+        if(this.y > UL && this.y < LL){
+            image(img, this.x, this.y);
+            
             // text bounding boxes
             // rectMode(CORNER);
             // fill(255, 255, 0, 100)

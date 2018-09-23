@@ -1,25 +1,27 @@
 //task bar variables
-var taskBarHeight = 40;
+const taskBarHeight = 40;
 
 //menu button variables
-var menuButtonWidth = 100;
-var menuButtonPopupWidth = 250;
-var menuButtonPopupHeight = 350;
+const menuButtonWidth = 100;
+const menuButtonPopupWidth = 250;
+const menuButtonPopupHeight = 350;
 
 //icon variables
-var buffer = 10;
-var defIconWidth = 50;
-var defIconHeight = 50;
+const buffer = 10;
+const defIconWidth = 50;
+const defIconHeight = 50;
 
 // clickable variables
 var clickables = [];
-var clickableTypes = {
+const clickableTypes = {
     MENU: "MENU",
     TRASH: "TRASH",
     BULLET_BOUNCE: "BULLET_BOUNCE",
     GITHUB: "GITHUB",
     MEANINGFUL: "MEANINGFUL",
-    MEANINGLESS: "MEANINGLESS"
+    MEANINGLESS: "MEANINGLESS",
+    EXP: "EXPERIENCE",
+    SKILLS: "SKILLS"
 }
 
 // images
@@ -29,15 +31,20 @@ var githubI;
 var bulletBounceI;
 var menuI;
 var menuItemI;
+var xpI;
+var skillsI;
+var skillsG;
 
 //popup varibles
-var textHeight = 30;
+const textHeight = 30;
 var popups = []
-var popupTypes = {
+const popupTypes = {
     MENU: "MENU",
     TRASH: "TRASH",
     MEANINGFUL: "MEANINGFUL",
-    MEANINGLESS: "MEANINGLESS"
+    MEANINGLESS: "MEANINGLESS",
+    EXP: "EXPERIENCE",
+    SKILLS: "SKILLS"
 }
 
 //menu item variables
@@ -63,14 +70,21 @@ function setup() {
     bulletBounceI = loadImage("./images/BBLogo.png");
     menuI = loadImage("./images/menu.png");
     menuItemI = loadImage("./images/menuItemBackground.png");
+    xpI = loadImage("./images/xp.png");
+    skillsI = loadImage("./images/xp.png");
+    skillsG = loadImage("./images/SkillsGraph.png");
 
     //desktop icons
     var trashIcon = new Clickable(clickableTypes.TRASH, buffer, buffer, defIconWidth, defIconHeight, color(0, 0, 0, 0), trashI);
-    var githubIcon = new Clickable(clickableTypes.GITHUB, buffer, defIconHeight + buffer * 2, defIconWidth, defIconHeight, color(50, 250, 80, 0), githubI);
-    var bulletBounceIcon = new Clickable(clickableTypes.BULLET_BOUNCE, buffer, defIconHeight * 2 + buffer * 3, defIconWidth, defIconHeight, color(0, 0, 0, 0), bulletBounceI);
     clickables.push(trashIcon);
+    var githubIcon = new Clickable(clickableTypes.GITHUB, buffer, defIconHeight + buffer * 2, defIconWidth, defIconHeight, color(50, 250, 80, 0), githubI);
     clickables.push(githubIcon);
+    var bulletBounceIcon = new Clickable(clickableTypes.BULLET_BOUNCE, buffer, defIconHeight * 2 + buffer * 3, defIconWidth, defIconHeight, color(0, 0, 0, 0), bulletBounceI);
     clickables.push(bulletBounceIcon);
+    var ExpIcon = new Clickable(clickableTypes.EXP, buffer, defIconHeight * 3 + buffer * 4, defIconWidth, defIconHeight, color(50, 250, 80, 0), xpI);
+    clickables.push(ExpIcon);
+    var SkillsIcon = new Clickable(clickableTypes.SKILLS, buffer, defIconHeight * 4 + buffer * 5, defIconWidth, defIconHeight, color(50, 250, 80, 0), skillsI);
+    clickables.push(SkillsIcon);
 
     //menu button
     menuButton = new Clickable(clickableTypes.MENU, 0, height - taskBarHeight, menuButtonWidth, taskBarHeight, color(0, 0, 0, 0), menuI);
@@ -90,6 +104,20 @@ function setup() {
     trashPopup.movable = true;
     popups.push(trashPopup);
 
+    //expeirence popup
+    experiencePopup = new Popup(popupTypes.EXP, width/2, height/2, 300, 500, color(225, 225, 225));
+    experiencePopup.textBoxes.push(new textBox("My Previous Work Experience", 24));
+    experiencePopup.textBoxes.push(new textBox("null", 12));
+    experiencePopup.movable = true;
+    popups.push(experiencePopup);
+
+    //skills popup
+    skillsPopup = new Popup(popupTypes.SKILLS, width/2, height/2, 300, 500, color(225, 225, 225));
+    skillsPopup.textBoxes.push(new textBox("My Skills", 24));
+    skillsPopup.textBoxes.push(new imageBox(skillsG));
+    skillsPopup.movable = true;
+    popups.push(skillsPopup);
+
     //menu popup
     menuPopup = new Popup(popupTypes.MENU, menuButtonPopupWidth/2, height-taskBarHeight-(menuButtonPopupHeight/2), menuButtonPopupWidth, menuButtonPopupHeight, color(225, 225, 225));
     menuPopup.canScroll = false;
@@ -101,7 +129,7 @@ function setup() {
     //menu item popups
     meaningfulPopup = new Popup(popupTypes.MEANINGFUL, menuButtonPopupWidth+150+10, height/2, 300, 500, color(225, 225, 225));
     meaningfulPopup.textBoxes.push(new textBox("Meaningful things", 24));
-    meaningfulPopup.textBoxes.push(new textBox("I got top 1% for the digital technologies ICAS", 12));
+    meaningfulPopup.textBoxes.push(new textBox("I got top 1% for the 2018 digital technologies ICAS", 12));
     popups.push(meaningfulPopup);
 
     meaninglessPopup = new Popup(popupTypes.MEANINGLESS, menuButtonPopupWidth+150+10, height/2 + 30, 300, 500, color(225, 225, 225));
@@ -180,24 +208,17 @@ function Clickable(type, x, y, w, h, col, icon) {
                     window.open("http://github.com/Waffles823543");
                 }else if(this.type == "BULLET_BOUNCE"){
                     window.open("https://www.code4fun.com.au/programming/code4fun-student-released-android-app");
-                }else if(this.type == "MENU"){
-                    if(meaningfulPopup.isOpen){
-                        meaningfulPopup.toggle();
-                    }
-                    if(meaninglessPopup.isOpen){
-                        meaninglessPopup.toggle();
-                    }
-                }else if(this.type == "MEANINGFUL" && meaninglessPopup.isOpen){
-                    meaninglessPopup.toggle();
-                }else if(this.type == "MEANINGLESS" && meaningfulPopup.isOpen){
-                    meaningfulPopup.toggle();
                 }
                 popups.forEach((i) => {
                     if(i.type == this.type){
+                        popups.forEach((i) => {
+                            if(i.isOpen && i.canScroll && i.type != this.type){
+                                i.toggle();
+                            }   
+                        });
                         i.toggle();
                     }
                 })
-                console.log("clicked " + this.type);
                 return true;
             }
         }
@@ -210,22 +231,19 @@ function mousePressed() {
         if(!i.checkColl(mouseX, mouseY)){
             startX = mouseX;
             startY = mouseY;
-            console.log("started dragging", dragBox);
         }
     });
     menuItems.forEach((i) => {
         if(!i.checkColl(mouseX, mouseY)){
             startX = mouseX;
             startY = mouseY;
-            console.log("started dragging", dragBox);
         }
     });
     popups.forEach((i) => {
         if(i.checkColl(mouseX, mouseY)){
             draggingPopup = i.type;
-            console.log("click popup " + i.type);
-            popupDragStartX = i.cx;
-            popupDragStartY = i.cy;
+            popupDragStartX = i.x;
+            popupDragStartY = i.y;
         }else{
             startX = mouseX;
             startY = mouseY;
@@ -243,17 +261,18 @@ function mouseWheel(event) {
 function mouseDragged(){
     if(!draggingPopup){
         dragBox = [startX, startY, mouseX, mouseY];
-        console.log("dragging", dragBox);
     }else{
         popups.forEach((i) => {
             if(i.type == draggingPopup && i.movable){
-                i.cx = (mouseX - startX) + popupDragStartX;
-                i.cy = (mouseY - startY) + popupDragStartY;
+                i.currScroll = 0;
+                i.x = (mouseX - startX) + popupDragStartX;
+                i.y = (mouseY - startY) + popupDragStartY + 10;
                 for (var j = 0; j < i.textBoxes.length; j++){
-                    i.textBoxes[j].x = i.x;
+                    i.textBoxes[j].x = i.x + 20;
                     i.textBoxes[j].y = i.y + 30*j + 1;
                 }
             }
+            i.draw();
         });
     }
 }
