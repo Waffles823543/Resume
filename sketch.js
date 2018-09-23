@@ -71,7 +71,7 @@ function setup() {
     menuI = loadImage("./images/menu.png");
     menuItemI = loadImage("./images/menuItemBackground.png");
     xpI = loadImage("./images/xp.png");
-    skillsI = loadImage("./images/xp.png");
+    skillsI = loadImage("./images/Skills.png");
     skillsG = loadImage("./images/SkillsGraph.png");
 
     //desktop icons
@@ -101,13 +101,15 @@ function setup() {
     //trash popup
     trashPopup = new Popup(popupTypes.TRASH, width/2, height/2, 300, 500, color(225, 225, 225));
     trashPopup.textBoxes.push(new textBox("Trash", 24));
+    trashPopup.textBoxes.push(new textBox("My hopes and dreams", 12));
     trashPopup.movable = true;
     popups.push(trashPopup);
 
     //expeirence popup
     experiencePopup = new Popup(popupTypes.EXP, width/2, height/2, 300, 500, color(225, 225, 225));
     experiencePopup.textBoxes.push(new textBox("My Previous Work Experience", 24));
-    experiencePopup.textBoxes.push(new textBox("null", 12));
+    experiencePopup.textBoxes.push(new textBox("2-3 years of self taught programming", 12));
+    experiencePopup.textBoxes.push(new textBox("3-4 years of going to programming classes and a bit of self taught", 12));
     experiencePopup.movable = true;
     popups.push(experiencePopup);
 
@@ -130,6 +132,11 @@ function setup() {
     meaningfulPopup = new Popup(popupTypes.MEANINGFUL, menuButtonPopupWidth+150+10, height/2, 300, 500, color(225, 225, 225));
     meaningfulPopup.textBoxes.push(new textBox("Meaningful things", 24));
     meaningfulPopup.textBoxes.push(new textBox("I got top 1% for the 2018 digital technologies ICAS", 12));
+    meaningfulPopup.textBoxes.push(new textBox("I am in the selective stream (top 60) for my year", 12));
+    meaningfulPopup.textBoxes.push(new textBox("I am in the top 10 for mathematics in my year", 12));
+    meaningfulPopup.textBoxes.push(new textBox("I understand the basics of how a Generative Adverserial Neural Network works and have succesfully written one", 8));
+    meaningfulPopup.textBoxes.push(new textBox("As you may have noticed I also made a webiste using the p5.js framework", 12));
+    meaningfulPopup.textBoxes.push(new textBox("I made a website at rafsgames.azurewebsites.net", 12));
     popups.push(meaningfulPopup);
 
     meaninglessPopup = new Popup(popupTypes.MEANINGLESS, menuButtonPopupWidth+150+10, height/2 + 30, 300, 500, color(225, 225, 225));
@@ -268,7 +275,11 @@ function mouseDragged(){
                 i.x = (mouseX - startX) + popupDragStartX;
                 i.y = (mouseY - startY) + popupDragStartY + 10;
                 for (var j = 0; j < i.textBoxes.length; j++){
-                    i.textBoxes[j].x = i.x + 20;
+                    if(i.textBoxes[j].isImage == false){
+                        i.textBoxes[j].x = i.x;
+                    }else{
+                        i.textBoxes[j].x = i.x + 20;
+                    }
                     i.textBoxes[j].y = i.y + 30*j + 1;
                 }
             }
