@@ -66,7 +66,7 @@ function setup() {
     // load images
     bg = loadImage("./images/background.png");
     trashI = loadImage("./images/trash.png");
-    githubI = loadImage("./images/Ggithub.png");
+    githubI = loadImage("./images/Github.png");
     bulletBounceI = loadImage("./images/BBLogo.png");
     menuI = loadImage("./images/menu.png");
     menuItemI = loadImage("./images/menuItemBackground.png");
