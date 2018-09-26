@@ -66,7 +66,7 @@ function setup() {
     // load images
     bg = loadImage("./images/background.png");
     trashI = loadImage("./images/trash.png");
-    githubI = loadImage("./images/github.png");
+    githubI = loadImage("./images/Ggithub.png");
     bulletBounceI = loadImage("./images/BBLogo.png");
     menuI = loadImage("./images/menu.png");
     menuItemI = loadImage("./images/menuItemBackground.png");
@@ -91,22 +91,22 @@ function setup() {
     clickables.push(menuButton);
 
     //menu items
-    meaningfulButton = new Clickable(clickableTypes.MEANINGFUL, 5, height-taskBarHeight-menuButtonPopupHeight + 5, menuButtonPopupWidth-10, 30, color(0, 0, 0), menuItemI)
-    meaninglessButton = new Clickable(clickableTypes.MEANINGLESS, 5, height-taskBarHeight-menuButtonPopupHeight + 35, menuButtonPopupWidth-10, 30, color(0, 0, 0), menuItemI)
+    meaningfulButton = new Clickable(clickableTypes.MEANINGFUL, 5, height - taskBarHeight - menuButtonPopupHeight + 5, menuButtonPopupWidth - 10, 30, color(0, 0, 0), menuItemI)
+    meaninglessButton = new Clickable(clickableTypes.MEANINGLESS, 5, height - taskBarHeight - menuButtonPopupHeight + 35, menuButtonPopupWidth - 10, 30, color(0, 0, 0), menuItemI)
     meaningfulButton.isVisible = false;
     meaninglessButton.isVisible = false;
     menuItems.push(meaningfulButton);
     menuItems.push(meaninglessButton);
 
     //trash popup
-    trashPopup = new Popup(popupTypes.TRASH, width/2, height/2, 300, 500, color(225, 225, 225));
+    trashPopup = new Popup(popupTypes.TRASH, width / 2, height / 2, 300, 500, color(225, 225, 225));
     trashPopup.textBoxes.push(new textBox("Trash", 24));
     trashPopup.textBoxes.push(new textBox("My hopes and dreams", 12));
     trashPopup.movable = true;
     popups.push(trashPopup);
 
     //expeirence popup
-    experiencePopup = new Popup(popupTypes.EXP, width/2, height/2, 300, 500, color(225, 225, 225));
+    experiencePopup = new Popup(popupTypes.EXP, width / 2, height / 2, 300, 500, color(225, 225, 225));
     experiencePopup.textBoxes.push(new textBox("My Previous Work Experience", 24));
     experiencePopup.textBoxes.push(new textBox("2-3 years of self taught programming", 12));
     experiencePopup.textBoxes.push(new textBox("3-4 years of going to programming classes and a bit of self taught", 12));
@@ -114,14 +114,14 @@ function setup() {
     popups.push(experiencePopup);
 
     //skills popup
-    skillsPopup = new Popup(popupTypes.SKILLS, width/2, height/2, 300, 500, color(225, 225, 225));
+    skillsPopup = new Popup(popupTypes.SKILLS, width / 2, height / 2, 300, 500, color(225, 225, 225));
     skillsPopup.textBoxes.push(new textBox("My Skills", 24));
     skillsPopup.textBoxes.push(new imageBox(skillsG));
     skillsPopup.movable = true;
     popups.push(skillsPopup);
 
     //menu popup
-    menuPopup = new Popup(popupTypes.MENU, menuButtonPopupWidth/2, height-taskBarHeight-(menuButtonPopupHeight/2), menuButtonPopupWidth, menuButtonPopupHeight, color(225, 225, 225));
+    menuPopup = new Popup(popupTypes.MENU, menuButtonPopupWidth / 2, height - taskBarHeight - (menuButtonPopupHeight / 2), menuButtonPopupWidth, menuButtonPopupHeight, color(225, 225, 225));
     menuPopup.canScroll = false;
     menuPopup.textBoxes.push(new textBox("Meaningful things I've done", 15));
     menuPopup.textBoxes.push(new textBox("Meaningless things I've done", 15));
@@ -129,7 +129,7 @@ function setup() {
     console.log(menuPopup.textBoxes)
 
     //menu item popups
-    meaningfulPopup = new Popup(popupTypes.MEANINGFUL, menuButtonPopupWidth+150+10, height/2, 300, 500, color(225, 225, 225));
+    meaningfulPopup = new Popup(popupTypes.MEANINGFUL, menuButtonPopupWidth + 150 + 10, height / 2, 300, 500, color(225, 225, 225));
     meaningfulPopup.textBoxes.push(new textBox("Meaningful things", 24));
     meaningfulPopup.textBoxes.push(new textBox("I got top 1% for the 2018 digital technologies ICAS", 12));
     meaningfulPopup.textBoxes.push(new textBox("I am in the selective stream (top 60) for my year", 12));
@@ -139,7 +139,7 @@ function setup() {
     meaningfulPopup.textBoxes.push(new textBox("I made a website at rafsgames.azurewebsites.net", 12));
     popups.push(meaningfulPopup);
 
-    meaninglessPopup = new Popup(popupTypes.MEANINGLESS, menuButtonPopupWidth+150+10, height/2 + 30, 300, 500, color(225, 225, 225));
+    meaninglessPopup = new Popup(popupTypes.MEANINGLESS, menuButtonPopupWidth + 150 + 10, height / 2 + 30, 300, 500, color(225, 225, 225));
     meaninglessPopup.textBoxes.push(new textBox("Meaningless things", 24));
     meaninglessPopup.textBoxes.push(new textBox("I can move my eyebrows independently of each other", 12));
     meaninglessPopup.textBoxes.push(new textBox("I can wiggle my ears", 12));
@@ -195,13 +195,13 @@ function Clickable(type, x, y, w, h, col, icon) {
 
     this.isVisible = true;
 
-    this.imgH = this.icon.height/(this.icon.height/this.h);
-    this.imgW = this.icon.width/(this.icon.width/this.w);
+    this.imgH = this.icon.height / (this.icon.height / this.h);
+    this.imgW = this.icon.width / (this.icon.width / this.w);
 
     this.draw = function() {
         noStroke();
         fill(this.col);
-        if(this.isVisible){
+        if (this.isVisible) {
             rectMode(CORNER);
             rect(this.x, this.y, this.w, this.h)
             image(this.icon, this.x, this.y, this.imgW, this.imgH);
@@ -211,17 +211,17 @@ function Clickable(type, x, y, w, h, col, icon) {
     this.checkColl = function(x2, y2) {
         if (x2 > this.x && x2 < this.x + this.w && this.isVisible) {
             if (y2 > this.y && y2 < this.y + this.h) {
-                if(this.type == "GITHUB"){
+                if (this.type == "GITHUB") {
                     window.open("http://github.com/Waffles823543");
-                }else if(this.type == "BULLET_BOUNCE"){
+                } else if (this.type == "BULLET_BOUNCE") {
                     window.open("https://www.code4fun.com.au/programming/code4fun-student-released-android-app");
                 }
                 popups.forEach((i) => {
-                    if(i.type == this.type){
+                    if (i.type == this.type) {
                         popups.forEach((i) => {
-                            if(i.isOpen && i.canScroll && i.type != this.type){
+                            if (i.isOpen && i.canScroll && i.type != this.type) {
                                 i.toggle();
-                            }   
+                            }
                         });
                         i.toggle();
                     }
@@ -235,23 +235,23 @@ function Clickable(type, x, y, w, h, col, icon) {
 //check clicks
 function mousePressed() {
     clickables.forEach((i) => {
-        if(!i.checkColl(mouseX, mouseY)){
+        if (!i.checkColl(mouseX, mouseY)) {
             startX = mouseX;
             startY = mouseY;
         }
     });
     menuItems.forEach((i) => {
-        if(!i.checkColl(mouseX, mouseY)){
+        if (!i.checkColl(mouseX, mouseY)) {
             startX = mouseX;
             startY = mouseY;
         }
     });
     popups.forEach((i) => {
-        if(i.checkColl(mouseX, mouseY)){
+        if (i.checkColl(mouseX, mouseY)) {
             draggingPopup = i.type;
             popupDragStartX = i.x;
             popupDragStartY = i.y;
-        }else{
+        } else {
             startX = mouseX;
             startY = mouseY;
         }
@@ -265,22 +265,22 @@ function mouseWheel(event) {
     })
 }
 
-function mouseDragged(){
-    if(!draggingPopup){
+function mouseDragged() {
+    if (!draggingPopup) {
         dragBox = [startX, startY, mouseX, mouseY];
-    }else{
+    } else {
         popups.forEach((i) => {
-            if(i.type == draggingPopup && i.movable){
+            if (i.type == draggingPopup && i.movable) {
                 i.currScroll = 0;
                 i.x = (mouseX - startX) + popupDragStartX;
                 i.y = (mouseY - startY) + popupDragStartY + 10;
-                for (var j = 0; j < i.textBoxes.length; j++){
-                    if(i.textBoxes[j].isImage == false){
+                for (var j = 0; j < i.textBoxes.length; j++) {
+                    if (i.textBoxes[j].isImage == false) {
                         i.textBoxes[j].x = i.x;
-                    }else{
+                    } else {
                         i.textBoxes[j].x = i.x + 20;
                     }
-                    i.textBoxes[j].y = i.y + 30*j + 1;
+                    i.textBoxes[j].y = i.y + 30 * j + 1;
                 }
             }
             i.draw();
@@ -288,6 +288,6 @@ function mouseDragged(){
     }
 }
 
-function mouseReleased(){
+function mouseReleased() {
     dragBox = [0, 0, 0, 0];
 }
