@@ -21,7 +21,8 @@ const clickableTypes = {
     MEANINGFUL: "MEANINGFUL",
     MEANINGLESS: "MEANINGLESS",
     EXP: "EXPERIENCE",
-    SKILLS: "SKILLS"
+    SKILLS: "SKILLS",
+    MS: "MINESWEEPER"
 }
 
 // images
@@ -44,7 +45,8 @@ const popupTypes = {
     MEANINGFUL: "MEANINGFUL",
     MEANINGLESS: "MEANINGLESS",
     EXP: "EXPERIENCE",
-    SKILLS: "SKILLS"
+    SKILLS: "SKILLS",
+    MS: "MINESWEEPER"
 }
 
 //menu item variables
@@ -62,6 +64,7 @@ var canDrag = false;
 function setup() {
     createCanvas(windowWidth, windowHeight);
     noStroke();
+    textFont('Georgia');
 
     // load images
     bg = loadImage("./images/background.png");
@@ -73,6 +76,7 @@ function setup() {
     xpI = loadImage("./images/xp.png");
     skillsI = loadImage("./images/Skills.png");
     skillsG = loadImage("./images/SkillsGraph.png");
+    minesweeperI = loadImage("./images/minesweeper.jpg");
 
     //desktop icons
     var trashIcon = new Clickable(clickableTypes.TRASH, buffer, buffer, defIconWidth, defIconHeight, color(0, 0, 0, 0), trashI);
@@ -85,6 +89,8 @@ function setup() {
     clickables.push(ExpIcon);
     var SkillsIcon = new Clickable(clickableTypes.SKILLS, buffer, defIconHeight * 4 + buffer * 5, defIconWidth, defIconHeight, color(50, 250, 80, 0), skillsI);
     clickables.push(SkillsIcon);
+    var MinesweeperIcon = new Clickable(clickableTypes.MS, buffer, defIconHeight * 5 + buffer * 6, defIconWidth, defIconHeight, color(50, 250, 80, 0), minesweeperI);
+    clickables.push(MinesweeperIcon);
 
     //menu button
     menuButton = new Clickable(clickableTypes.MENU, 0, height - taskBarHeight, menuButtonWidth, taskBarHeight, color(0, 0, 0, 0), menuI);
@@ -101,7 +107,7 @@ function setup() {
     //trash popup
     trashPopup = new Popup(popupTypes.TRASH, width / 2, height / 2, 300, 500, color(225, 225, 225));
     trashPopup.textBoxes.push(new textBox("Trash", 24));
-    trashPopup.textBoxes.push(new textBox("My hopes and dreams", 12));
+    trashPopup.textBoxes.push(new textBox("Nothing Here", 12));
     trashPopup.movable = true;
     popups.push(trashPopup);
 
@@ -119,6 +125,13 @@ function setup() {
     skillsPopup.textBoxes.push(new imageBox(skillsG));
     skillsPopup.movable = true;
     popups.push(skillsPopup);
+
+    //expeirence popup
+    minesweeperPopup = new Popup(popupTypes.MS, width / 2, height / 2, 300, 500, color(225, 225, 225));
+    minesweeperPopup.textBoxes.push(new textBox("Minesweeper", 24));
+    minesweeperPopup.games.push(new game(""));
+    minesweeperPopup.movable = false;
+    popups.push(minesweeperPopup);
 
     //menu popup
     menuPopup = new Popup(popupTypes.MENU, menuButtonPopupWidth / 2, height - taskBarHeight - (menuButtonPopupHeight / 2), menuButtonPopupWidth, menuButtonPopupHeight, color(225, 225, 225));
@@ -251,6 +264,9 @@ function mousePressed() {
             draggingPopup = i.type;
             popupDragStartX = i.x;
             popupDragStartY = i.y;
+            let left = mouseButton == "left" ? true : false;
+            i.games.forEach(() => { clicked(left) });
+
         } else {
             startX = mouseX;
             startY = mouseY;
